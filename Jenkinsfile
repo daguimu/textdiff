@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'DEPLOY_HOST', defaultValue: '', description: 'Deployment server IP or hostname')
+        string(name: 'DEPLOY_SSH_CREDENTIAL_ID', defaultValue: '', description: 'Jenkins SSH credential ID for deployment server')
+        string(name: 'DEPLOY_DIR', defaultValue: '/opt/textdiff', description: 'Deployment directory on remote server')
+        string(name: 'HEALTH_URL', defaultValue: '', description: 'Health check URL, e.g. http://your-domain/health')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -11,15 +18,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    def deployHost = (params.DEPLOY_HOST ?: env.DEPLOY_HOST ?: '').trim()
-                    def deployDir = (params.DEPLOY_DIR ?: env.DEPLOY_DIR ?: '/opt/textdiff').trim()
-                    def deployCredentialId = (params.DEPLOY_SSH_CREDENTIAL_ID ?: env.DEPLOY_SSH_CREDENTIAL_ID ?: '').trim()
+                    def deployHost = params.DEPLOY_HOST.trim()
+                    def deployDir = params.DEPLOY_DIR.trim()
+                    def deployCredentialId = params.DEPLOY_SSH_CREDENTIAL_ID.trim()
 
                     if (!deployHost) {
-                        error("Missing DEPLOY_HOST. Configure it as a Jenkins job parameter or environment variable.")
+                        error("Missing DEPLOY_HOST.")
                     }
                     if (!deployCredentialId) {
-                        error("Missing DEPLOY_SSH_CREDENTIAL_ID. Configure it as a Jenkins job parameter or environment variable.")
+                        error("Missing DEPLOY_SSH_CREDENTIAL_ID.")
                     }
 
                     sh "tar czf /tmp/textdiff.tar.gz --exclude='.git' --exclude='node_modules' --exclude='dist' --exclude='deploy/.env' ."
@@ -54,14 +61,14 @@ pipeline {
         stage('Health Check') {
             steps {
                 script {
-                    def healthUrl = (params.HEALTH_URL ?: env.HEALTH_URL ?: '').trim()
+                    def healthUrl = params.HEALTH_URL.trim()
                     if (!healthUrl) {
-                        error("Missing HEALTH_URL. Configure it as a Jenkins job parameter or environment variable.")
+                        error("Missing HEALTH_URL.")
                     }
                 }
                 retry(3) {
                     sleep 5
-                    sh "curl -sf ${(params.HEALTH_URL ?: env.HEALTH_URL).trim()}"
+                    sh "curl -sf ${params.HEALTH_URL.trim()}"
                 }
             }
         }
