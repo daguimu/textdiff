@@ -5,7 +5,6 @@ pipeline {
         string(name: 'DEPLOY_HOST', defaultValue: '', description: 'Deployment server IP or hostname')
         string(name: 'DEPLOY_SSH_CREDENTIAL_ID', defaultValue: '', description: 'Jenkins SSH credential ID for deployment server')
         string(name: 'DEPLOY_DIR', defaultValue: '/opt/textdiff', description: 'Deployment directory on remote server')
-        string(name: 'HEALTH_URL', defaultValue: '', description: 'Health check URL, e.g. http://your-domain')
     }
 
     stages {
@@ -54,21 +53,6 @@ pipeline {
                             nginx -s reload 2>/dev/null || true
                         """
                     }
-                }
-            }
-        }
-
-        stage('Health Check') {
-            steps {
-                script {
-                    def healthUrl = params.HEALTH_URL.trim()
-                    if (!healthUrl) {
-                        error("Missing HEALTH_URL.")
-                    }
-                }
-                retry(3) {
-                    sleep 5
-                    sh "curl -sf ${params.HEALTH_URL.trim()}"
                 }
             }
         }
