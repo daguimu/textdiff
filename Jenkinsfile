@@ -49,7 +49,11 @@ pipeline {
                             tar xzf /tmp/textdiff.tar.gz
                             rm -f /tmp/textdiff.tar.gz
                             cd deploy
-                            docker compose up --build
+                            docker compose build
+                            docker create --name textdiff-tmp textdiff:latest
+                            rm -rf ${deployDir}/dist
+                            docker cp textdiff-tmp:/build/dist ${deployDir}/dist
+                            docker rm textdiff-tmp
                             nginx -s reload 2>/dev/null || true
                         """
                     }
