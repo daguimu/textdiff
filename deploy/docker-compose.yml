@@ -4,17 +4,6 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
-      args:
-        NODE_IMAGE: ${NODE_IMAGE:-node:22-alpine}
-        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmjs.org}
     volumes:
-      - dist:/build/dist
+      - /opt/textdiff/dist:/build/dist
     entrypoint: ["echo", "Build complete"]
-
-volumes:
-  dist:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${DIST_DIR:-/opt/textdiff/dist}
