@@ -1,4 +1,4 @@
-ARG NODE_IMAGE=docker.xuanyuan.run/node:22-alpine
+ARG NODE_IMAGE=node:22-alpine
 
 FROM ${NODE_IMAGE} AS builder
 
