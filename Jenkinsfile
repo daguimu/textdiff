@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'DEPLOY_HOST', defaultValue: '', description: 'Deployment server IP or hostname')
-        string(name: 'DEPLOY_SSH_CREDENTIAL_ID', defaultValue: '', description: 'Jenkins SSH credential ID for deployment server')
-        string(name: 'DEPLOY_DIR', defaultValue: '/opt/textdiff', description: 'Deployment directory on remote server')
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -17,15 +11,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    def deployHost = params.DEPLOY_HOST.trim()
-                    def deployDir = params.DEPLOY_DIR.trim()
-                    def deployCredentialId = params.DEPLOY_SSH_CREDENTIAL_ID.trim()
+                    def deployHost = (params.DEPLOY_HOST ?: env.DEPLOY_HOST ?: '').trim()
+                    def deployDir = (params.DEPLOY_DIR ?: env.DEPLOY_DIR ?: '/opt/textdiff').trim()
+                    def deployCredentialId = (params.DEPLOY_SSH_CREDENTIAL_ID ?: env.DEPLOY_SSH_CREDENTIAL_ID ?: '').trim()
 
                     if (!deployHost) {
-                        error("Missing DEPLOY_HOST.")
+                        error("Missing DEPLOY_HOST. Configure it as a Jenkins job parameter or environment variable.")
                     }
                     if (!deployCredentialId) {
-                        error("Missing DEPLOY_SSH_CREDENTIAL_ID.")
+                        error("Missing DEPLOY_SSH_CREDENTIAL_ID. Configure it as a Jenkins job parameter or environment variable.")
                     }
 
                     sh "tar czf /tmp/textdiff.tar.gz --exclude='.git' --exclude='node_modules' --exclude='dist' --exclude='deploy/.env' ."
