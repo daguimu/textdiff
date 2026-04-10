@@ -43,7 +43,7 @@ pipeline {
                             tar xzf /tmp/textdiff.tar.gz
                             rm -f /tmp/textdiff.tar.gz
                             cd deploy
-                            docker compose build
+                            docker compose build --build-arg NODE_IMAGE=docker.xuanyuan.run/node:22-alpine
                             docker create --name textdiff-tmp textdiff:latest
                             rm -rf ${deployDir}/dist
                             docker cp textdiff-tmp:/build/dist ${deployDir}/dist
