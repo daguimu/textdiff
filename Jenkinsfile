@@ -5,7 +5,7 @@ pipeline {
         string(name: 'DEPLOY_HOST', defaultValue: '', description: 'Deployment server IP or hostname')
         string(name: 'DEPLOY_SSH_CREDENTIAL_ID', defaultValue: '', description: 'Jenkins SSH credential ID for deployment server')
         string(name: 'DEPLOY_DIR', defaultValue: '/opt/textdiff', description: 'Deployment directory on remote server')
-        string(name: 'HEALTH_URL', defaultValue: '', description: 'Health check URL, e.g. http://your-domain/health')
+        string(name: 'HEALTH_URL', defaultValue: '', description: 'Health check URL, e.g. http://your-domain')
     }
 
     stages {
