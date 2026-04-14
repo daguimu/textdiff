@@ -47,14 +47,27 @@ function getColor(type: string): string {
 function getTint(type: string): string {
   switch (type) {
     case 'added':
-      return 'rgba(46,160,67,0.08)';
+      return 'rgba(58,154,92,0.12)';
     case 'removed':
-      return 'rgba(248,81,73,0.08)';
+      return 'rgba(181,51,51,0.12)';
     case 'modified':
-      return 'rgba(210,153,34,0.08)';
+      return 'rgba(160,120,32,0.12)';
     default:
-      return 'rgba(96,165,250,0.08)';
+      return 'rgba(201,100,66,0.12)';
   }
+}
+
+function connectorEdges(range: BlockRange, w: number): { top: string; bottom: string } {
+  const lt = range.leftStart * LINE_HEIGHT;
+  const lb = (range.leftStart + range.leftCount) * LINE_HEIGHT;
+  const rt = range.rightStart * LINE_HEIGHT;
+  const rb = (range.rightStart + range.rightCount) * LINE_HEIGHT;
+  const cx1 = w * 0.3;
+  const cx2 = w * 0.7;
+  return {
+    top: `M 0,${lt} C ${cx1},${lt} ${cx2},${rt} ${w},${rt}`,
+    bottom: `M 0,${lb} C ${cx1},${lb} ${cx2},${rb} ${w},${rb}`,
+  };
 }
 
 export function MergeGutter({
@@ -85,7 +98,7 @@ export function MergeGutter({
 
   return (
     <div
-      className="shrink-0 overflow-hidden border-l border-r border-gray-100 dark:border-base-200"
+      className="shrink-0 overflow-hidden border-l border-r border-[#e8e6dc] dark:border-[#30302e]"
       style={{
         width: GUTTER_WIDTH,
         minWidth: GUTTER_WIDTH,
@@ -102,18 +115,28 @@ export function MergeGutter({
           {ranges.map((range) => {
             const color = getColor(range.type);
             const isActive = activeBlockId !== null && range.blockId === activeBlockId;
+            const edges = connectorEdges(range, GUTTER_WIDTH);
             return (
-              <path
-                key={range.blockId}
-                d={connectorPath(range, GUTTER_WIDTH)}
-                style={{
-                  fill: getTint(range.type),
-                  stroke: color,
-                  strokeOpacity: isActive ? 0.6 : 0.2,
-                  strokeWidth: isActive ? 1 : 0.8,
-                  opacity: isActive ? 1 : 0.9,
-                }}
-              />
+              <g key={range.blockId} opacity={isActive ? 1 : 0.9}>
+                <path
+                  d={connectorPath(range, GUTTER_WIDTH)}
+                  fill={getTint(range.type)}
+                />
+                <path
+                  d={edges.top}
+                  fill="none"
+                  stroke={color}
+                  strokeWidth={0.8}
+                  strokeOpacity={isActive ? 0.4 : 0.18}
+                />
+                <path
+                  d={edges.bottom}
+                  fill="none"
+                  stroke={color}
+                  strokeWidth={0.8}
+                  strokeOpacity={isActive ? 0.4 : 0.18}
+                />
+              </g>
             );
           })}
         </svg>

@@ -47,9 +47,10 @@ function ToolbarBtn({
       disabled={disabled}
       title={title}
       className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium
-        bg-gray-100 dark:bg-base-200 text-gray-600 dark:text-gray-400
-        border border-gray-200 dark:border-base-200
-        hover:bg-gray-200 dark:hover:bg-base-300 hover:text-gray-800 dark:hover:text-gray-200
+        bg-[#e8e6dc] dark:bg-[#30302e] text-[#4d4c48] dark:text-[#b0aea5]
+        shadow-[0_0_0_1px_#d1cfc5] dark:shadow-[0_0_0_1px_#3d3d3a]
+        hover:bg-[#d1cfc5] dark:hover:bg-[#3d3d3a] hover:text-[#141413] dark:hover:text-[#faf9f5]
+        focus-visible:ring-2 focus-visible:ring-[#3898ec]/40 focus-visible:outline-none
         transition-colors cursor-pointer
         disabled:opacity-30 disabled:cursor-not-allowed"
     >
@@ -76,9 +77,10 @@ function NavBtn({
       title={title}
       aria-label={title}
       className="flex items-center justify-center w-7 h-7 rounded-lg
-        bg-gray-100 dark:bg-base-200 text-blue-500 dark:text-blue-400
-        border border-gray-200 dark:border-base-200
-        hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-200 dark:hover:border-blue-800
+        bg-[#e8e6dc] dark:bg-[#30302e] text-[#c96442] dark:text-[#d97757]
+        shadow-[0_0_0_1px_#d1cfc5] dark:shadow-[0_0_0_1px_#3d3d3a]
+        hover:bg-[#c96442]/10 dark:hover:bg-[#d97757]/10 hover:shadow-[0_0_0_1px_#c96442] dark:hover:shadow-[0_0_0_1px_#d97757]
+        focus-visible:ring-2 focus-visible:ring-[#3898ec]/40 focus-visible:outline-none
         transition-colors cursor-pointer
         disabled:opacity-30 disabled:cursor-not-allowed"
     >
@@ -105,18 +107,21 @@ export function Header({
   const hasChanges = totalChanges > 0;
 
   return (
-    <header className="sticky top-0 z-50 shrink-0 px-4 py-2.5 bg-white dark:bg-base-100 border-b border-gray-100 dark:border-base-200">
+    <header className="sticky top-0 z-50 shrink-0 px-4 py-2.5 bg-[#faf9f5] dark:bg-[var(--surface-card-dark)] border-b border-[#f0eee6] dark:border-[#30302e]">
       <div className="flex items-center justify-between gap-3 flex-wrap">
         {/* Left: Brand + Controls */}
         <div className="flex items-center gap-1.5 flex-wrap min-w-0">
           <div className="flex items-center gap-2 pr-2">
-            <GitCompareArrows size={20} className="text-blue-500" />
-            <span className="text-sm font-semibold tracking-tight text-gray-700 dark:text-gray-300">
+            <GitCompareArrows size={20} className="text-[#c96442]" />
+            <span
+              className="text-sm font-medium tracking-tight text-[#141413] dark:text-[#faf9f5]"
+              style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+            >
               TextDiff
             </span>
           </div>
 
-          <div className="w-px h-5 mx-1 bg-gray-200 dark:bg-base-300 hidden sm:block" />
+          <div className="w-px h-5 mx-1 bg-[#e8e6dc] dark:bg-[#30302e] hidden sm:block" />
 
           <ToolbarBtn onClick={onLoadSample} title={t.loadSample}>
             <FileText size={16} />
@@ -143,7 +148,7 @@ export function Header({
             {t.undo}
           </ToolbarBtn>
 
-          <div className="w-px h-5 mx-1 bg-gray-200 dark:bg-base-300" />
+          <div className="w-px h-5 mx-1 bg-[#e8e6dc] dark:bg-[#30302e]" />
 
           <NavBtn
             onClick={onPrevDiff}
@@ -153,7 +158,7 @@ export function Header({
             <ChevronUp size={16} />
           </NavBtn>
           <span
-            className="text-xs font-semibold min-w-[44px] text-center select-none text-gray-500 dark:text-gray-400"
+            className="text-xs font-medium min-w-[44px] text-center select-none text-[#5e5d59] dark:text-[#b0aea5]"
             style={{ opacity: hasChanges ? 1 : 0.4 }}
           >
             {hasChanges
@@ -173,22 +178,22 @@ export function Header({
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
           <div className="flex items-center gap-1.5">
             {stats.filesChanged === 0 ? (
-              <span className="text-xs px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-base-200 text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-base-200">
+              <span className="text-xs px-2.5 py-1 rounded-lg bg-[#e8e6dc] dark:bg-[#30302e] text-[#87867f] shadow-[0_0_0_1px_#d1cfc5] dark:shadow-[0_0_0_1px_#3d3d3a]">
                 {t.noChanges}
               </span>
             ) : (
               <>
-                <span className="text-xs px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-base-200 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-base-200">
+                <span className="text-xs px-2.5 py-1 rounded-lg bg-[#e8e6dc] dark:bg-[#30302e] text-[#5e5d59] dark:text-[#b0aea5] shadow-[0_0_0_1px_#d1cfc5] dark:shadow-[0_0_0_1px_#3d3d3a]">
                   {t.fileChanged(stats.filesChanged)}
                 </span>
                 {stats.insertions > 0 && (
-                  <span className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
+                  <span className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-[#3a9a5c]/10 text-[#3a9a5c] shadow-[0_0_0_1px_rgba(58,154,92,0.25)]">
                     <Plus size={16} />
                     {stats.insertions}
                   </span>
                 )}
                 {stats.deletions > 0 && (
-                  <span className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 border border-red-100 dark:border-red-900/30">
+                  <span className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-[#b53333]/10 text-[#b53333] dark:text-[#e05555] shadow-[0_0_0_1px_rgba(181,51,51,0.25)]">
                     <Minus size={16} />
                     {stats.deletions}
                   </span>
@@ -201,9 +206,10 @@ export function Header({
           <button
             onClick={toggleLocale}
             className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium
-              bg-gray-100 dark:bg-base-200 text-gray-500 dark:text-gray-400
-              border border-gray-200 dark:border-base-200
-              hover:bg-gray-200 dark:hover:bg-base-300 hover:text-gray-700 dark:hover:text-gray-200
+              bg-[#e8e6dc] dark:bg-[#30302e] text-[#5e5d59] dark:text-[#b0aea5]
+              shadow-[0_0_0_1px_#d1cfc5] dark:shadow-[0_0_0_1px_#3d3d3a]
+              hover:bg-[#d1cfc5] dark:hover:bg-[#3d3d3a] hover:text-[#141413] dark:hover:text-[#faf9f5]
+              focus-visible:ring-2 focus-visible:ring-[#3898ec]/40 focus-visible:outline-none
               transition-colors cursor-pointer"
             title={locale === 'en' ? '切换到中文' : 'Switch to English'}
           >
@@ -215,8 +221,9 @@ export function Header({
           <button
             onClick={onToggleTheme}
             className="w-10 h-10 rounded-full flex items-center justify-center
-              bg-gray-100 dark:bg-base-200 text-gray-500 dark:text-gray-400
-              hover:bg-gray-200 dark:hover:bg-base-100 hover:text-gray-700 dark:hover:text-gray-200
+              bg-[#e8e6dc] dark:bg-[#30302e] text-[#5e5d59] dark:text-[#b0aea5]
+              hover:bg-[#d1cfc5] dark:hover:bg-[#3d3d3a] hover:text-[#141413] dark:hover:text-[#faf9f5]
+              focus-visible:ring-2 focus-visible:ring-[#3898ec]/40 focus-visible:outline-none
               transition-colors cursor-pointer"
             title={theme === 'light' ? t.darkMode : t.lightMode}
           >

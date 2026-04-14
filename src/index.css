@@ -1,59 +1,64 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* ── Diff Color Tokens — GitHub-style, AG softness ── */
+/* Use class-based dark mode (.dark) instead of OS prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Claude Design System Tokens ── */
+/* Dark Container (#1e1e1c): intermediate surface between Near Black (#141413)
+   and Dark Surface (#30302e) — provides visual layering for card/panel backgrounds
+   in dark mode. Not in the official DESIGN.md but maintains warm olive undertone.
+   Referenced via --surface-card-dark in the .dark block below. */
 :root {
-  /* Green: additions */
-  --diff-added-bg: #dafbe1;
-  --diff-added-inline: rgba(46, 160, 67, 0.3);
-  --diff-added-marker: #2da44e;
-  /* Red: deletions */
-  --diff-removed-bg: #ffebe9;
-  --diff-removed-inline: rgba(255, 129, 130, 0.4);
-  --diff-removed-marker: #cf222e;
-  /* Amber: modifications */
-  --diff-modified-bg: #fff8c5;
-  --diff-modified-inline: rgba(210, 153, 34, 0.3);
-  --diff-modified-marker: #bf8700;
+  /* Diff — warm-adapted functional colors */
+  --diff-added-bg: rgba(46, 160, 67, 0.12);
+  --diff-added-inline: rgba(46, 160, 67, 0.22);
+  --diff-added-marker: #3a9a5c;
+  --diff-removed-bg: rgba(181, 51, 51, 0.10);
+  --diff-removed-inline: rgba(181, 51, 51, 0.22);
+  --diff-removed-marker: #b53333;
+  --diff-modified-bg: rgba(180, 130, 40, 0.10);
+  --diff-modified-inline: rgba(180, 130, 40, 0.22);
+  --diff-modified-marker: #a07820;
 
-  --diff-gutter-bg: #f6f8fa;
-  --diff-line-number: #8b949e;
-  --diff-merge-btn: #3b82f6;
-  --diff-active-ring: rgba(59, 130, 246, 0.10);
+  --diff-gutter-bg: #f7f6f1;
+  --diff-line-number: #87867f;
+  --diff-merge-btn: #c96442;
+  --diff-active-ring: rgba(201, 100, 66, 0.10);
 
-  --surface-primary: #ffffff;
-  --surface-border: #f1f5f9;
-  --text-primary: #1f2328;
-  --text-secondary: #656d76;
-  --text-tertiary: #8b949e;
-  --accent: #3b82f6;
+  /* Claude surfaces */
+  --surface-primary: #faf9f5;
+  --surface-border: #f0eee6;
+  --text-primary: #141413;
+  --text-secondary: #5e5d59;
+  --text-tertiary: #87867f;
+  --accent: #c96442;
 }
 
 .dark {
-  /* Green: additions */
-  --diff-added-bg: rgba(46, 160, 67, 0.15);
-  --diff-added-inline: rgba(46, 160, 67, 0.4);
+  --surface-card-dark: #1e1e1c;
+
+  --diff-added-bg: rgba(46, 160, 67, 0.14);
+  --diff-added-inline: rgba(46, 160, 67, 0.35);
   --diff-added-marker: #3fb950;
-  /* Red: deletions */
-  --diff-removed-bg: rgba(248, 81, 73, 0.15);
-  --diff-removed-inline: rgba(248, 81, 73, 0.4);
-  --diff-removed-marker: #f85149;
-  /* Amber: modifications */
-  --diff-modified-bg: rgba(210, 153, 34, 0.15);
-  --diff-modified-inline: rgba(210, 153, 34, 0.4);
+  --diff-removed-bg: rgba(181, 51, 51, 0.14);
+  --diff-removed-inline: rgba(181, 51, 51, 0.35);
+  --diff-removed-marker: #e05555;
+  --diff-modified-bg: rgba(180, 130, 40, 0.14);
+  --diff-modified-inline: rgba(180, 130, 40, 0.35);
   --diff-modified-marker: #d29922;
 
-  --diff-gutter-bg: rgba(13, 17, 23, 0.6);
-  --diff-line-number: #484f58;
-  --diff-merge-btn: #60a5fa;
-  --diff-active-ring: rgba(96, 165, 250, 0.10);
+  --diff-gutter-bg: rgba(20, 20, 19, 0.7);
+  --diff-line-number: #5e5d59;
+  --diff-merge-btn: #d97757;
+  --diff-active-ring: rgba(217, 119, 87, 0.10);
 
-  --surface-primary: #0d1117;
-  --surface-border: #1e293b;
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
-  --text-tertiary: #6e7681;
-  --accent: #60a5fa;
+  --surface-primary: #141413;
+  --surface-border: #30302e;
+  --text-primary: #faf9f5;
+  --text-secondary: #b0aea5;
+  --text-tertiary: #87867f;
+  --accent: #d97757;
 }
 
 /* ── Reset ── */
@@ -69,15 +74,15 @@ body,
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", sans-serif;
+  font-family: "Söhne", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 }
 
-/* ── Scrollbar ── */
+/* ── Scrollbar — warm tones ── */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -88,14 +93,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.35);
+  background: rgba(176, 174, 165, 0.35);
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.55);
+  background: rgba(176, 174, 165, 0.55);
   background-clip: padding-box;
 }
 
@@ -110,14 +115,14 @@ textarea::placeholder {
 }
 
 textarea::selection {
-  background-color: rgba(59, 130, 246, 0.25);
+  background-color: rgba(201, 100, 66, 0.18);
 }
 
 .dark textarea::selection {
-  background-color: rgba(96, 165, 250, 0.3);
+  background-color: rgba(217, 119, 87, 0.25);
 }
 
-/* ── Merge Gutter Dot Buttons ── */
+/* ── Merge Gutter Dot Buttons — terracotta accent ── */
 .merge-dot-btn {
   z-index: 2;
   appearance: none;
@@ -129,15 +134,20 @@ textarea::selection {
   justify-content: center;
   border-radius: 50%;
   cursor: pointer;
-  color: #22c55e;
-  background: rgba(34, 197, 94, 0.1);
+  color: #c96442;
+  background: rgba(201, 100, 66, 0.10);
   transition: background-color 0.15s, color 0.15s, transform 0.15s;
 }
 
 .merge-dot-btn:hover {
-  color: #fff;
-  background: #22c55e;
+  color: #faf9f5;
+  background: #c96442;
   transform: scale(1.12);
+}
+
+.merge-dot-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(56, 152, 236, 0.4);
 }
 
 .merge-dot-btn:active {
@@ -145,13 +155,13 @@ textarea::selection {
 }
 
 .dark .merge-dot-btn {
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.12);
+  color: #d97757;
+  background: rgba(217, 119, 87, 0.12);
 }
 
 .dark .merge-dot-btn:hover {
-  color: #fff;
-  background: #22c55e;
+  color: #faf9f5;
+  background: #d97757;
 }
 
 /* ── Reduced Motion ── */

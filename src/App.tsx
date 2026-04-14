@@ -62,16 +62,16 @@ function PanelLabel({
   }, [text]);
 
   return (
-    <div className="flex-1 flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-gray-400 dark:text-gray-500" style={{ paddingLeft: 52 }}>
+    <div className="flex-1 flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-[#87867f]" style={{ paddingLeft: 52 }}>
       {label}
       <div className="ml-auto flex items-center gap-1.5">
         <button
           onClick={handleCopy}
           disabled={!text}
-          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[11px] font-medium cursor-pointer transition-colors disabled:opacity-30 disabled:cursor-not-allowed ${
+          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-medium cursor-pointer transition-colors focus-visible:ring-2 focus-visible:ring-[#3898ec]/40 focus-visible:outline-none disabled:opacity-30 disabled:cursor-not-allowed ${
             copied
-              ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/40'
-              : 'border-gray-200 dark:border-base-200 bg-white dark:bg-base-100 text-gray-400 dark:text-gray-500 hover:text-blue-500 hover:border-blue-200 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:border-blue-900/40 dark:hover:bg-blue-900/20'
+              ? 'bg-[#3a9a5c]/10 text-[#3a9a5c] shadow-[0_0_0_1px_rgba(58,154,92,0.25)]'
+              : 'bg-[#faf9f5] dark:bg-[var(--surface-card-dark)] text-[#87867f] shadow-[0_0_0_1px_#f0eee6] dark:shadow-[0_0_0_1px_#30302e] hover:text-[#c96442] hover:shadow-[0_0_0_1px_#c96442]'
           }`}
           title={copyTitle}
           aria-label={copyTitle}
@@ -82,7 +82,7 @@ function PanelLabel({
         <button
           onClick={onClear}
           disabled={disabled}
-          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border border-gray-200 dark:border-base-200 bg-white dark:bg-base-100 text-gray-400 dark:text-gray-500 text-[11px] font-medium cursor-pointer hover:text-red-500 hover:border-red-200 hover:bg-red-50 dark:hover:text-red-400 dark:hover:border-red-900/40 dark:hover:bg-red-900/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-gray-400 disabled:hover:bg-white disabled:hover:border-gray-200"
+          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-[#faf9f5] dark:bg-[var(--surface-card-dark)] text-[#87867f] text-[11px] font-medium cursor-pointer shadow-[0_0_0_1px_#f0eee6] dark:shadow-[0_0_0_1px_#30302e] hover:text-[#b53333] hover:shadow-[0_0_0_1px_#b53333] focus-visible:ring-2 focus-visible:ring-[#3898ec]/40 focus-visible:outline-none transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-[#87867f] disabled:hover:shadow-[0_0_0_1px_#f0eee6]"
           title={t.clear}
           aria-label={t.clear}
         >
@@ -381,9 +381,9 @@ export default function App() {
   }, [ranges]);
 
   return (
-    <div className="h-screen bg-[#FAFBFC] dark:bg-[#1d232a] p-3 md:p-4 transition-colors duration-200">
+    <div className="h-screen bg-[#f5f4ed] dark:bg-[#141413] p-3 md:p-4 transition-colors duration-200">
       <motion.div
-        className="h-full flex flex-col bg-white dark:bg-base-100 rounded-2xl shadow-sm border border-gray-100 dark:border-base-200 overflow-hidden"
+        className="h-full flex flex-col bg-[#faf9f5] dark:bg-[var(--surface-card-dark)] rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.2)] border border-[#f0eee6] dark:border-[#30302e] overflow-hidden"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -404,7 +404,7 @@ export default function App() {
         />
 
         {/* Panel labels */}
-        <div className="flex shrink-0 border-b border-gray-100 dark:border-base-200 bg-gray-50/60 dark:bg-base-200/40">
+        <div className="flex shrink-0 border-b border-[#f0eee6] dark:border-[#30302e] bg-[#f5f4ed]/60 dark:bg-[#141413]/40">
           <PanelLabel
             label={t.original}
             clearLabel={t.clear}
@@ -414,7 +414,7 @@ export default function App() {
             copyTitle={t.copyOriginal}
           />
           <div
-            className="border-l border-r border-gray-100 dark:border-base-200"
+            className="border-l border-r border-[#e8e6dc] dark:border-[#30302e]"
             style={{
               width: GUTTER_WIDTH,
               minWidth: GUTTER_WIDTH,

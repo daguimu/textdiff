@@ -60,10 +60,10 @@ function blockBorderShadow(type: string, isFirst: boolean, isLast: boolean): str
   if (!isFirst && !isLast) return undefined;
   const color =
     type === 'added'
-      ? 'rgba(46,160,67,0.22)'
+      ? 'rgba(58,154,92,0.22)'
       : type === 'removed'
-        ? 'rgba(248,81,73,0.22)'
-        : 'rgba(210,153,34,0.22)';
+        ? 'rgba(181,51,51,0.22)'
+        : 'rgba(160,120,32,0.22)';
   const parts: string[] = [];
   if (isFirst) parts.push(`inset 0 1px 0 0 ${color}`);
   if (isLast) parts.push(`inset 0 -1px 0 0 ${color}`);
@@ -178,9 +178,9 @@ export const EditorPanel = forwardRef<EditorPanelHandle, EditorPanelProps>(
 
     return (
       <div
-        className={`relative flex flex-1 min-w-0 bg-white dark:bg-base-100 transition-shadow duration-200 ${
+        className={`relative flex flex-1 min-w-0 bg-[#faf9f5] dark:bg-[var(--surface-card-dark)] transition-shadow duration-200 ${
           isFocused
-            ? 'z-2 shadow-[inset_0_0_0_1px_rgba(59,130,246,0.3),0_0_0_3px_rgba(59,130,246,0.08)]'
+            ? 'z-2 shadow-[inset_0_0_0_1px_rgba(201,100,66,0.25),0_0_0_3px_rgba(201,100,66,0.06)]'
             : ''
         }`}
       >
