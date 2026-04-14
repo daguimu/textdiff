@@ -24,7 +24,12 @@ export function useTheme() {
   }, [theme]);
 
   const toggleTheme = useCallback(() => {
+    const root = document.documentElement;
+    root.classList.add('theme-transitioning');
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    window.setTimeout(() => {
+      root.classList.remove('theme-transitioning');
+    }, 400);
   }, []);
 
   return { theme, toggleTheme };
